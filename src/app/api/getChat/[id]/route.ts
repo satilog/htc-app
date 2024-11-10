@@ -1,18 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import supabase from '@/models/supabase';
+import dbConnect from '@/lib/mongodb';
+import Chat from '@/models/Chat';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
     const { id } = params;
     try {
-        const body = await req.json();         
-        const { id } = body;
+        // Connect to the MongoDB database
+        await dbConnect();
 
-        if (!id)
-            return NextResponse.json({ message: 'Id are required.' }, { status: 400 });
-   
+        const fetchChat = await Chat.findById(id).populate('messages').populate('users');
+        if (!fetchChat) {
+            return NextResponse.json({ message: 'Chat not found' }, { status: 404 });
+        }
 
+        return NextResponse.json({ chat: fetchChat }, { status: 200 });
 
-            return NextResponse.json({ message: 'User added successfully', user: newUser }, { status: 201 });
     } 
     catch (error: any) {
         return NextResponse.json({ message: 'Error saving user', error: error.message }, { status: 500 });

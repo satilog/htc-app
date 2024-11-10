@@ -6,26 +6,24 @@ import Chat from '@/models/Chat';
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json(); // Get the JSON body from the request
-        const { chatName, url, description } = body;
+        const { chatName, url, description, userEmail } = body;
 
         if (!chatName || !description || !url)
             return NextResponse.json({ message: 'Chat name, url and description are required.' }, { status: 400 });
    
         await dbConnect(); // Connect to MongoDB
 
-        // Create a new chat object
-        const newChat = {
+        const currentUser = await User.findOne({
+            email: userEmail
+        })
+
+        const newChat = await Chat.create({
             chatName,
             url,
-            messages: [],
-            users: [],
             description,
-        };
+            users: [currentUser._id]
+        })
 
-        // Save the new chat to the database
-        await newChat.save();
-
-        // Return success response
         return NextResponse.json({ message: 'Chat added successfully', data: newChat }, { status: 201 });
   } 
     catch (error: any) {
