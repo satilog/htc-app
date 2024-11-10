@@ -4,7 +4,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 const defaultUser = {
     username: "cheesedanish",
     pronouns: ["he", "him"],
-    email: "satyam@gmail.com",
+    // email: "satyam@gmail.com",
+    // email: "cheesedanish@gmail.com",
+    email: "mockToken123",
 };
 
 

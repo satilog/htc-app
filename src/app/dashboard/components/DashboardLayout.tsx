@@ -1,9 +1,10 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BarChart from "@/app/dashboard/components/CustomBarChart";
 import ICUPatientList from "@/app/dashboard/components/TabList";
 import CategoryUsageChart from "./CategoryUsageChart";
+import {useCommon} from "@/app/context/CommonContext"
 import {
   Card,
   CardContent,
@@ -19,13 +20,51 @@ export default function DashboardLayout() {
     topCategory: "Social Media",
   });
 
-  const categories = [
-    "Social Media", "News", "Shopping", "Entertainment", "Education", 
-    "Productivity", "Communication", "Finance", "Search Engines",
-    "Health & Fitness", "Real Estate", "Travel & Navigation",
-    "Technology & Gadgets", "Lifestyle", "Government & Legal",
-    "Job Search", "DIY & Hobbies", "Automotive", "Gaming", "Other",
-  ];
+  const [categoryData, setCategoryData] = useState([]);
+  const [tabData, setTabData] = useState([]);
+  const {user} = useCommon();
+
+  useEffect(() => {
+    // Fetch category durations data
+    async function fetchCategoryData() {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/user/user_activity_summary/" + user.email, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(response);
+        const data = await response.json();
+        const categoryDurations = Object.keys(data).map(category => ({
+          name: category,
+          duration: data[category],
+        }));
+        setCategoryData(categoryDurations);
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    }
+
+    // Fetch domain durations data
+    async function fetchTabData() {
+      try {
+        const response = await fetch("http://127.0.0.1:5000/user/user_domain_summary/" + user.email, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        setTabData(data);
+      } catch (error) {
+        console.error("Error fetching tab data:", error);
+      }
+    }
+
+    fetchCategoryData();
+    fetchTabData();
+  }, []);
 
   return (
     <div className="flex flex-col flex-grow w-full">
@@ -89,7 +128,7 @@ export default function DashboardLayout() {
               </CardTitle>
             </CardHeader>
             <div className="h-[calc(7*4rem)] overflow-y-auto">
-              <CategoryUsageChart />
+              <CategoryUsageChart data={categoryData} />
             </div>
           </Card>
           <Card className="col-span-2 h-full">
@@ -99,7 +138,7 @@ export default function DashboardLayout() {
               </CardTitle>
             </CardHeader>
             <div className="h-[calc(7*4rem)] overflow-y-auto">
-              <ICUPatientList />
+              <ICUPatientList data={tabData} />
             </div>
           </Card>
         </div>
