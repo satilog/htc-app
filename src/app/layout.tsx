@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import NavBar from "../components/navbar";
-
+import NavBar from "@/components/navbar";
+import { Separator } from "@/components/ui/separator"
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -22,12 +22,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>){
-  return (
-    <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-            <NavBar /> 
-            {children}
+    const separatorCSS = `
+        h-full w-1
+    `;
+    return (
+        <html lang="en">
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                </link>
+            <div className="flex w-screen h-screen">
+                <NavBar/> 
+                <Separator orientation="vertical" className={separatorCSS}/>
+                {children}
+            </div>
         </body>
     </html>
   );

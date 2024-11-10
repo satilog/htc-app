@@ -20,7 +20,7 @@ function generateColors(name, colors) {
 }
 
 const AvatarMarble = (props) => {
-  const { name, colors, title, square, size, ...otherProps } = props;
+  const { name, colors, title, square, size, className, ...otherProps } = props;
   const properties = generateColors(name, colors);
   const maskID = React.useId();
 
@@ -32,6 +32,7 @@ const AvatarMarble = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      className={className}
       {...otherProps}
     >
       {title && <title>{name}</title>}

@@ -16,7 +16,7 @@ function generateColors(name, colors) {
 }
 
 const AvatarSunset = (props) => {
-  const { name, colors, title, square, size, ...otherProps } = props;
+  const { name, colors, title, square, size, className, ...otherProps } = props;
   const sunsetColors = generateColors(name, colors);
   const nameWithoutSpace = name.replace(/\s/g, '');
   const maskID = React.useId();
@@ -29,6 +29,7 @@ const AvatarSunset = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      className={className}
       {...otherProps}
     >
       {title && <title>{name}</title>}

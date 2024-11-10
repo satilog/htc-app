@@ -35,7 +35,7 @@ function generateData(name, colors) {
 }
 
 const AvatarBeam = (props) => {
-  const { name, colors, title, square, size, ...otherProps } = props;
+  const { name, colors, title, square, size, className, ...otherProps } = props;
   const data = generateData(name, colors);
   const maskID = React.useId();
 
@@ -47,6 +47,7 @@ const AvatarBeam = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      className={className}
       {...otherProps}
     >
       {title && <title>{name}</title>}

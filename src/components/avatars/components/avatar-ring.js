@@ -25,7 +25,7 @@ function generateColors(colors, name) {
 }
 
 const AvatarRing = (props) => {
-  const { name, colors, title, square, size, ...otherProps } = props;
+  const { name, colors, title, square, size, className, ...otherProps } = props; 
   const ringColors = generateColors(colors, name);
   const maskID = React.useId();
 
@@ -37,6 +37,7 @@ const AvatarRing = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
+      className={className}
       {...otherProps}
     >
       {title && <title>{name}</title>}

@@ -61,6 +61,10 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+::-webkit-scrollbar {
+    display: none;
+}
+
 
 @layer base {
   * {
@@ -68,5 +72,8 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .ease{
+      @apply transition-all ease-in-out;
   }
 }
