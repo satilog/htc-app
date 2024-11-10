@@ -101,7 +101,7 @@ export default function Search(){
     return(
         <Layout>
             <div className={containerCSS}>
-                {chats.map((chat) => (
+                {chats && chats.map((chat) => (
                     createCard(chat)
                 ))}
             </div>

@@ -11,4 +11,4 @@ const ChatSchema = new Schema({
     users: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-export default models.Chat || model("Chat", ChatSchema);
+module.exports = models.Chat || model("Chat", ChatSchema);

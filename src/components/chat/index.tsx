@@ -3,17 +3,13 @@ import React from "react";
 import Avatar from "@/components/avatars/index.js";
 import { colors, chats } from "@/lib/utils";
 import { useCommon } from "@/app/context/CommonContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const chatBubble = (messages: any, i: int) => { 
-    console.log(messages, "messages");
     const { user } = useCommon();
     const avatarCSS = `
         w-14 h-14
         chat-image avatar
-    `;
-    const messageCSS = `
-        h-full w-full
     `;
     const messageLeftCSS = `
         chat chat-start
@@ -26,11 +22,8 @@ const chatBubble = (messages: any, i: int) => {
     const p0 = messages?.author?.pronouns && messages?.author?.pronouns[0] || "";
     const p1 = messages?.author?.pronouns && messages?.author?.pronouns[1] || "";
 
-
     return(
-       <div style={{
-        // backgroundColor: "black",
-       }} key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
+       <div key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
             <Avatar name={messages.author.username} colors={colors} variant="beam" className={avatarCSS} />
             <div className="chat-header flex items-center space-x-3">
                 <h1 className="text-lg">{messages.author.username}</h1>
@@ -41,21 +34,26 @@ const chatBubble = (messages: any, i: int) => {
                     <h1 className="text-md opacity-50">{(p0 || p1)}</h1>
                 )}
             </div>
-            <div className="chat-bubble bg-gray-200 text-black text-xl">
+            <div className={`chat-bubble text-black text-xl ${messages.contentChange === true ? 'bg-pink-200' : 'bg-gray-200'}`}>
                 {messages.content}
             </div>
        </div>
     )    
 };
 
-
-
-
 export default function Chat(chatId: any){
     const { user } = useCommon();
     const [chat, setChat] = useState(null);
+    const messagesEndRef = useRef(null);
+    const chatContainerRef = useRef(null);
+
+    const scrollToBottom = () => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     const create = async() => {
-        console.log(chatId.chatId);
         const res = await fetch(`/api/getChat/${chatId.chatId}`, {
             method: "GET",
             headers: {
@@ -64,14 +62,18 @@ export default function Chat(chatId: any){
         });
         const data = await res.json();
         setChat(data.chat);
+    };
 
-    }
     useEffect(() => {
         if(chatId.chatId)
             create();
     }, [chatId.chatId]);
 
-    
+    // Scroll to bottom whenever messages change
+    useEffect(() => {
+        scrollToBottom();
+    }, [chat?.messages]);
+
     const chatCSS = `
         relative
         h-full w-full
@@ -109,9 +111,8 @@ export default function Chat(chatId: any){
     `;
 
     const type = async(e) => {
-        /*
         if(e.key === "Enter"){
-            const res = await fetch(`/api/createMessage/${chatId}`, {
+            const res = await fetch(`/api/createMessage/${chatId.chatId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -120,31 +121,32 @@ export default function Chat(chatId: any){
             });
             const data = await res.json();
             e.target.value = "";
+            setChat((prev) => {
+                return {
+                    ...prev,
+                    messages: [...prev.messages, data.data],
+                };
+            });
         }
-        */
-    }
-
-
-    // return
+    };
 
     return(
-        <div className={chatCSS}
-        >
+        <div className={chatCSS}>
             <div className={headerCSS}>
                 <Avatar name={chat?.url} colors={colors} variant="bauhaus" className={avatarCSS} />
                 <div className={titleCSS}>
                     <h1>{chat?.chatName}</h1>
                 </div>
             </div>
-        <div className="h-[90vh] overflow-y-auto">
-            <div className={messagesCSS}>
-                {chat?.messages?.map((message: any, i: int) => chatBubble(message, i))}
+            <div className="h-[90vh] overflow-y-auto" ref={chatContainerRef}>
+                <div className={messagesCSS}>
+                    {chat?.messages?.map((message: any, i: int) => chatBubble(message, i))}
+                    <div ref={messagesEndRef} /> {/* Invisible element at the bottom */}
+                </div>
             </div>
-        </div>
-
             <div className={inputCSS}>
                 <input onKeyPress={(e) => type(e)} type="text" placeholder="Type here" className={inputAreaCSS}/>
             </div>
         </div>
-    )
+    );
 }
