@@ -48,16 +48,14 @@ const chatBubble = (messages: any, i: int) => {
 
 
 
-export default function Chat(chatUrl: string){
-    
-    console.log("chatUrl", chatUrl);
+export default function Chat(chatUrl: string, chatId: string){
+    const { user } = useCommon();
 
     let obj;
     for (let i = 0; i < chats.length; i++){
         // dont tocuh vvvvvvvvvvvvvvvvvv
         if(chats[i].url === chatUrl.chat){
             obj = chats[i];
-            console.log("found chat", obj);
             break;
         }
     }
@@ -78,36 +76,46 @@ export default function Chat(chatUrl: string){
         bg-gray-100
         flex items-center
     `;
-    
     const titleCSS = `
         w-full h-20
         flex items-center justify-center
         text-2xl font-bold
     `;
-
     const avatarCSS = `
         w-14 h-14
         ml-4
         ease duration-700
         hover:rotate-[360deg]
     `;
-
     const messagesCSS = `
         h-full w-full
         flex flex-col
     `;
-
     const inputAreaCSS = `
         input input-border 
         w-1/2 max-w-xs
         bg-gray-200
         text-gray-800
     `;
-
     const inputCSS = `
         h-20 w-full
         flex items-center justify-center
     `;
+
+    const type = async(e) => {
+        if(e.key === "Enter"){
+            const res = await fetch(`/api/createMessage/${chatUrl.chat}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: e.target.value, userEmail: user.email }),
+            });
+            const data = await res.json();
+            console.log(data);
+            e.target.value = "";
+        }
+    }
 
     return(
         <div className={chatCSS}>
@@ -121,7 +129,7 @@ export default function Chat(chatUrl: string){
                 {obj.messages.map((message: any, i: int) => chatBubble(message, i))}
             </div>
             <div className={inputCSS}>
-                <input type="text" placeholder="Type here" className={inputAreaCSS}/>
+                <input onKeyPress={(e) => type(e)} type="text" placeholder="Type here" className={inputAreaCSS}/>
             </div>
         </div>
     )

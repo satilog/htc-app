@@ -44,7 +44,7 @@ const section = (chat, i, handleOpenChat) => {
 
 
     return(
-     <li key={chat.chatId} className={itemCSS} onClick={()=>{handleOpenChat(chat.url)}}>
+     <li key={chat.chatId} className={itemCSS} onClick={()=>{handleOpenChat(chat._id)}}>
         <div className="flex flex-col">
             <div className="flex group space-x-3 my-3">
                 <Avatar name={chat.url} colors={colors} variant="bauhaus" className={avatarCSS}/>
@@ -108,7 +108,7 @@ function Chats(){
                 </ul>
             </div> 
             <Separator corientation="vertical" className={separatorCSS}/>
-            {(chatUrl) && <ChatBubble chat={chatUrl}/>}
+            {(chatUrl) && <ChatBubble chatUrl={chatUrl} chatId={chatId}/>}
         </div>
     )
 }
