@@ -63,6 +63,7 @@ function SignUp(){
            }
         );
         const data = await userRes.json();
+        const userEmail = localStorage.setItem("userEmail", data.user.email);
         setUser(data.user);
     }
 

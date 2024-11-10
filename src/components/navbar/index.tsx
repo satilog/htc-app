@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Changed from next/router
+import { useRouter } from "next/navigation";
 import Avatar from "../avatars/index.js";
 import { colors, pronounArray } from "@/lib/utils";
 import { useCommon } from "@/app/context/CommonContext";
@@ -16,7 +16,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const Account = ({ user }) => {  
     const [username, setUsername] = useState();
 
-
     const avatarCSS = `
         h-14 w-14
         outline-none
@@ -24,11 +23,8 @@ const Account = ({ user }) => {
         hover:rotate-[360deg] 
     `;
 
-    const updateUser = () =>{
-
+    const updateUser = () => {
     }
-
-
 
     return (
         <Dialog>
@@ -94,19 +90,19 @@ const Account = ({ user }) => {
 
 export default function NavBar() {
     const { user, setUser } = useCommon();
-
     const router = useRouter();
-    
-
-
 
     useEffect(() => {
-        //if (!user)
-            //router.push("/sign-up");
-    }, [/*user, router*/ ]); // Added router to dependency array
+        // Only redirect if user is not authenticated
+        const userEmail = localStorage.getItem("userEmail");
+        if (!user && !userEmail) {
+            router.push("/sign-up");
+        }
+        // Remove the else condition to prevent redirect loop
+    }, [user, router]);
 
-    if(!user)
-        return
+    // If no user, return null instead of redirecting again
+    if (!user) return null;
 
     const links = [
         {name: "Home", href: "/", icon: "home"},
