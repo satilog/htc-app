@@ -7,9 +7,6 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [
-    require("daisyui"),
-  ],
   theme: {
   	extend: {
   		colors: {
@@ -61,5 +58,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("daisyui")],
 } satisfies Config;

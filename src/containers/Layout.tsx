@@ -20,14 +20,8 @@ export default function Layout({
   const isScreenHeight = true;
 
   return (
-    <div
-      className={`flex flex-col ${
-        isScreenHeight ? "h-screen justify-between" : "h-screen justify-center"
-      }`}
-    >
-      <NavBar />
-
-      <main className="flex-grow pl-20 items-start justify-start w-full">
+    <div className="flex w-screen h-screen">
+      <main className="flex overflow-y-auto bg-white items-start justify-start w-full">
         <CommonProvider>{children}</CommonProvider>
       </main>
     </div>
