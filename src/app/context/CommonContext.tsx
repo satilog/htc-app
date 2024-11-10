@@ -10,7 +10,7 @@ export const CommonContext = createContext<CommonContextProps | undefined>(undef
 
 export const CommonProvider = ({ children }: { children: React.ReactNode }) => {
   const [commonState, setCommonState] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
 
 
   return (

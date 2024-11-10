@@ -101,10 +101,9 @@ export default function NavBar() {
 
 
     useEffect(() => {
-        if (!user) {
-            router.push("/sign-up");
-        }
-    }, [user, router]); // Added router to dependency array
+        //if (!user)
+            //router.push("/sign-up");
+    }, [/*user, router*/ ]); // Added router to dependency array
 
     if(!user)
         return
