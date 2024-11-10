@@ -3,9 +3,10 @@ import React from "react";
 import Avatar from "@/components/avatars/index.js";
 import { colors, chats } from "@/lib/utils";
 import { useCommon } from "@/app/context/CommonContext";
+import { useState, useEffect } from "react";
 
-
-const chatBubble = (messages: any, i: int) => {  
+const chatBubble = (messages: any, i: int) => { 
+    console.log(messages);
     const { user } = useCommon();
     const avatarCSS = `
         w-14 h-14
@@ -48,24 +49,27 @@ const chatBubble = (messages: any, i: int) => {
 
 
 
-export default function Chat(chatUrl: string, chatId: string){
+export default function Chat(chatId: any){
     const { user } = useCommon();
+    const [chat, setChat] = useState(null);
+    const create = async() => {
+        console.log(chatId.chatId);
+        const res = await fetch(`/api/getChat/${chatId.chatId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await res.json();
+        setChat(data.chat);
 
-    let obj;
-    for (let i = 0; i < chats.length; i++){
-        // dont tocuh vvvvvvvvvvvvvvvvvv
-        if(chats[i].url === chatUrl.chat){
-            obj = chats[i];
-            break;
-        }
     }
+    useEffect(() => {
+        if(chatId.chatId)
+            create();
+    }, [chatId.chatId]);
 
-    if(!obj){
-        return <h1>Chat id doesnt exist</h1>
-    }
-
-
-
+    
     const chatCSS = `
         relative
         h-full w-full
@@ -103,8 +107,9 @@ export default function Chat(chatUrl: string, chatId: string){
     `;
 
     const type = async(e) => {
+        /*
         if(e.key === "Enter"){
-            const res = await fetch(`/api/createMessage/${chatUrl.chat}`, {
+            const res = await fetch(`/api/createMessage/${chatId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -112,21 +117,24 @@ export default function Chat(chatUrl: string, chatId: string){
                 body: JSON.stringify({ message: e.target.value, userEmail: user.email }),
             });
             const data = await res.json();
-            console.log(data);
             e.target.value = "";
         }
+        */
     }
+
+
+    return
 
     return(
         <div className={chatCSS}>
             <div className={headerCSS}>
-                <Avatar name={obj.chatId} colors={colors} variant="bauhaus" className={avatarCSS} />
+                <Avatar name={chat.url} colors={colors} variant="bauhaus" className={avatarCSS} />
                 <div className={titleCSS}>
-                    <h1>{obj.chatName}</h1>
+                    <h1>{chat.chatName}</h1>
                 </div>
             </div>
             <div className={messagesCSS}>
-                {obj.messages.map((message: any, i: int) => chatBubble(message, i))}
+                {chat.messages.map((message: any, i: int) => chatBubble(message, i))}
             </div>
             <div className={inputCSS}>
                 <input onKeyPress={(e) => type(e)} type="text" placeholder="Type here" className={inputAreaCSS}/>

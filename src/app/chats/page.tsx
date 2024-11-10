@@ -7,10 +7,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Avatar from "@/components/avatars/index.js";
 import Chat from "./chat.tsx";
-import { colors, chats } from "@/lib/utils";
+import { colors } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator"
 import ChatBubble from "@/components/chat/index.tsx";
 import Layout from "@/containers/Layout";
+import { useCommon } from "@/app/context/CommonContext";
 
 const cutMessage = (message) => {
     if(message.length > 30){
@@ -70,12 +71,29 @@ export default function Page(){
 }
 
 function Chats(){
-    const [chatUrl, setChatUrl] = useState<string>(null);
-    useEffect(() => {
-        const saved = localStorage.getItem("chatUrl");
+    const [chatId, setChatId] = useState<string>(null);
+    const [chats, setChats] = useState([]);
+    const { user } = useCommon();
+
+    const create = async () => {
+        const res = await fetch(`/api/getChats/${user.email}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const data = await res.json();
+        setChats(data.chats);
+
+        const saved = localStorage.getItem("chatId");
         if(saved)
-            setChatUrl(saved);
-    }, [])
+            setChatId(saved);
+    }
+
+
+    useEffect(() => {
+        create();
+    }, []);
 
     const chatCSS = `
         w-full h-full
@@ -93,9 +111,9 @@ function Chats(){
         h-full w-1
     `;
 
-    const handleOpenChat = (url) => {
-        setChatUrl(url);
-        localStorage.setItem("chatUrl", url);
+    const handleOpenChat = (id) => {
+        setChatId(id);
+        localStorage.setItem("chatId", id);
     };
 
     return(
@@ -108,7 +126,7 @@ function Chats(){
                 </ul>
             </div> 
             <Separator corientation="vertical" className={separatorCSS}/>
-            {(chatUrl) && <ChatBubble chatUrl={chatUrl} chatId={chatId}/>}
+            {(chatId) && <ChatBubble chatId={chatId}/>}
         </div>
     )
 }
