@@ -4,8 +4,7 @@
 
 
 import React from "react";
-import {useState} from "react";
-import {useEffect} from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@/components/avatars/index.js";
 import Chat from "./chat.tsx";
 import { colors, chats } from "@/lib/utils";
@@ -88,7 +87,6 @@ export default function Chats(){
     `;
 
     const handleOpenChat = (id) => {
-        console.log("Hello World");
         setChatId(id);
         localStorage.setItem("chatId", id);
     };

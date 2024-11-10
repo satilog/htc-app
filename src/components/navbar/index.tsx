@@ -1,18 +1,22 @@
 "use client";
 import React from "react";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Changed from next/router
 import Avatar from "../avatars/index.js";
-import { colors, pronouns, user } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { colors, pronounArray } from "@/lib/utils";
+import { useCommon } from "@/app/context/CommonContext";
+import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+const Account = ({ user }) => {  
+    const [username, setUsername] = useState();
 
 
-
-const account = (user: any) => {
     const avatarCSS = `
         h-14 w-14
         outline-none
@@ -20,40 +24,43 @@ const account = (user: any) => {
         hover:rotate-[360deg] 
     `;
 
-    return(
+    const updateUser = () =>{
+
+    }
+
+
+
+    return (
         <Dialog>
             <DialogTrigger>
-                <Avatar name={user.displayName} colors={colors} variant="beam" className={avatarCSS} />
+                <Avatar name={user.username} colors={colors} variant="beam" className={avatarCSS} />
             </DialogTrigger>
             <DialogContent>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
-                </DialogDescription>
+                <DialogHeader>
+                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogDescription>
+                        Make changes to your profile here. Click save when you're done.
+                    </DialogDescription>
+                </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="username" className="text-right">
                             Username
                         </Label>
-                        <Input id="username" defaultValue="@Pablo" className="col-span-3"/>
+                        <Input onChange={(e)=>setUsername(e.target.value)} id="username" defaultValue={user.username} className="col-span-3"/>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Name
-                        </Label>
-                        <Input id="name" defaultValue="Pablo" className="col-span-3"/>
-                    </div>  
-                    <div className="grid grid-cols-4 gap-4 flex items-center">
+      
+                    <div className="grid grid-cols-4 gap-4 items-center">
                         <Label htmlFor="pronouns" className="text-right">
                             Pronouns
                         </Label>
-                        <div className="join">
+                        <div className="join col-span-3">
                             <Select>
                                 <SelectTrigger className="w-min join-item">
-                                    <SelectValue placeholder={user.pronouns[0]} />
+                                    <SelectValue placeholder={user.pronounArray} />
                                 </SelectTrigger>
                                 <SelectContent side="down" className="max-h-64">
-                                    {pronouns.map((pronoun, i) => (
+                                    {pronounArray.map((pronoun, i) => (
                                         <SelectItem key={i} value={pronoun}>
                                             {pronoun}
                                         </SelectItem>
@@ -62,10 +69,10 @@ const account = (user: any) => {
                             </Select>
                             <Select>
                                 <SelectTrigger className="w-min join-item">
-                                    <SelectValue placeholder={user.pronouns[1]} />
+                                    <SelectValue placeholder={user.pronounArray} />
                                 </SelectTrigger>
                                 <SelectContent side="down" className="max-h-64">
-                                    {pronouns.map((pronoun, i) => (
+                                    {pronounArray.map((pronoun, i) => (
                                         <SelectItem key={i} value={pronoun}>
                                             {pronoun}
                                         </SelectItem>
@@ -82,60 +89,31 @@ const account = (user: any) => {
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-    )
-}
+    );
+};
 
+export default function NavBar() {
+    const { user, setUser } = useCommon();
 
-const signUp = () => {
-    return(
-        <Dialog>
-            <DialogTrigger>
-                ?
-            </DialogTrigger>
-            <DialogContent>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                    Make changes to your profile here. Click save when you're done.
-                </DialogDescription>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="username" className="text-right">
-                            Username
-                        </Label>
-                        <Input id="username" defaultValue="@Pablo" className="col-span-3"/>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                            Name
-                        </Label>
-                        <Input id="name" defaultValue="Pablo" className="col-span-3"/>
-                    </div>  
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="pronouns" className="text-right">
-                            Pronouns
-                        </Label>
-                        <Input id="pronouns" defaultValue="He/She" className="col-span-3"/>
-                    </div>
-                </div>            
-                <DialogFooter>
-                    <Button type="submit">
-                        Save
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-
-    )
-}
+    const router = useRouter();
+    
 
 
 
-export default function NavBar(){
+    useEffect(() => {
+        if (!user) {
+            router.push("/sign-up");
+        }
+    }, [user, router]); // Added router to dependency array
+
+    if(!user)
+        return
+
     const links = [
         {name: "Home", href: "/", icon: "home"},
         {name: "Chats", href: "/chats", icon: "chat"},
         {name: "Search", href: "/search", icon: "search"},
-    ]
+    ];
 
     const itemCSS = `
         flex items-center justify-center
@@ -160,19 +138,18 @@ export default function NavBar(){
         h-1 w-2/3
         rounded-full
     `;
-
     const separator2CSS = `
         h-full w-1
     `;
 
-    return(
+    return (
         <>
             <ul className={navCSS}>
-                {user && account(user)}
+                <Account user={user} />
                 <Separator className={separator1CSS}/>
                 {links.map((link) => (
                     <li className={itemCSS} key={link.icon}>
-                        <Link  href={link.href} className={linkCSS}>
+                        <Link href={link.href} className={linkCSS}>
                             <i className="material-icons">{link.icon}</i>
                         </Link>
                     </li>
@@ -180,6 +157,5 @@ export default function NavBar(){
             </ul>
             <Separator orientation="vertical" className={separator2CSS}/>
         </>
-
-    )
+    );
 }

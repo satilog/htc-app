@@ -2,8 +2,6 @@ import React from 'react';
 import Avatar from '@/components/avatars/index.js';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog"
 import {colors, chats} from '@/lib/utils';
-import {useState} from 'react';
-import {useEffect} from 'react';
 
 const MAX_AVATARS = 5;
 

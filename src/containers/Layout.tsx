@@ -21,9 +21,12 @@ export default function Layout({
 
   return (
     <div className="flex w-screen h-screen">
-      <main className="flex overflow-y-auto bg-white items-start justify-start w-full">
-        <CommonProvider>{children}</CommonProvider>
-      </main>
+        <CommonProvider>
+            <NavBar/>
+            <main className="flex overflow-y-auto bg-white items-start justify-start w-full">
+                {children}
+            </main>
+        </CommonProvider>
     </div>
   );
 }
