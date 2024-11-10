@@ -36,7 +36,7 @@ export const chats = [
         "id": "msg-1-1",
         "content": "Hello everyone!",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -79,7 +79,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]
@@ -113,7 +113,7 @@ export const chats = [
         "id": "msg-2-1",
         "content": "Starting a new topic!",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -145,7 +145,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]
@@ -179,7 +179,7 @@ export const chats = [
         "id": "msg-1-1",
         "content": "Hello everyone!",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -222,7 +222,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]
@@ -256,7 +256,7 @@ export const chats = [
         "id": "msg-2-1",
         "content": "Starting a new topic!",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -288,7 +288,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]
@@ -322,7 +322,7 @@ export const chats = [
         "id": "msg-3-1",
         "content": "Anyone have tips for Japan?",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -354,7 +354,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]
@@ -388,7 +388,7 @@ export const chats = [
         "id": "msg-4-1",
         "content": "Anyone here play League of Legends?",
         "author": {
-          "email": "chessedanishboy@gmail.com",
+          "email": "cheesedanishboy@gmail.com",
           "username": "ChessDanishBoy",
           "password": "securePass123",
           "pronouns": ["he", "him"]
@@ -431,7 +431,7 @@ export const chats = [
     ],
     "users": [
       {
-        "email": "chessedanishboy@gmail.com",
+        "email": "cheesedanishboy@gmail.com",
         "username": "ChessDanishBoy",
         "password": "securePass123",
         "pronouns": ["he", "him"]

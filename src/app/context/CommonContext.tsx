@@ -1,6 +1,13 @@
 // context/CommonContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 
+const defaultUser = {
+    username: "cheesedanish",
+    pronouns: ["he", "him"],
+    email: "cheesedanishboy@gmail.com",
+};
+
+
 interface CommonContextProps {
   commonState: string;
   setCommonState: (state: string) => void;
@@ -10,7 +17,7 @@ export const CommonContext = createContext<CommonContextProps | undefined>(undef
 
 export const CommonProvider = ({ children }: { children: React.ReactNode }) => {
   const [commonState, setCommonState] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(defaultUser);
 
   const checkIfUserLoggedin = async () => {
     const email = localStorage.getItem("userEmail");

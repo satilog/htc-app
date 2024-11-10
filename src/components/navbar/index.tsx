@@ -17,7 +17,7 @@ const Account = ({ user }) => {
     const [username, setUsername] = useState();
 
     const avatarCSS = `
-        h-14 w-14
+        h-16 w-16
         outline-none
         ease duration-700
         hover:rotate-[360deg] 
@@ -108,6 +108,7 @@ export default function NavBar() {
         {name: "Home", href: "/", icon: "home"},
         {name: "Chats", href: "/chats", icon: "chat"},
         {name: "Search", href: "/search", icon: "search"},
+        {name: "Analytics", href: "/dashboard", icon: "analytics"},
     ];
 
     const itemCSS = `
@@ -145,7 +146,7 @@ export default function NavBar() {
                 {links.map((link) => (
                     <li className={itemCSS} key={link.icon}>
                         <Link href={link.href} className={linkCSS}>
-                            <i className="material-icons">{link.icon}</i>
+                            <i className="material-icons large">{link.icon}</i>
                         </Link>
                     </li>
                 ))}

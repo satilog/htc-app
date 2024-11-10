@@ -10,7 +10,7 @@ import Chat from "./chat.tsx";
 import { colors, chats } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator"
 import ChatBubble from "@/components/chat/index.tsx";
-
+import Layout from "@/containers/Layout";
 
 const cutMessage = (message) => {
     if(message.length > 30){
@@ -25,16 +25,16 @@ const section = (chat, i, handleOpenChat) => {
         cursor-pointer
     `;
     const avatarCSS = `
-        w-12 h-12
+        w-14 h-14
         ease duration-700
         group-hover:rotate-[360deg]
     `;
     const chatNameCSS = `
-        text-lg font-bold
+        text-xl font-bold
 
     `;
     const descriptionCSS = `
-        text-sm
+        text-md
     `;
     const separatorCSS = `
         h-1 w-full
@@ -44,10 +44,10 @@ const section = (chat, i, handleOpenChat) => {
 
 
     return(
-     <li key={chat.chatId} className={itemCSS} onClick={()=>handleOpenChat(chat.chatId)}>
+     <li key={chat.chatId} className={itemCSS} onClick={()=>{handleOpenChat(chat.url)}}>
         <div className="flex flex-col">
             <div className="flex group space-x-3 my-3">
-                <Avatar name={chat.chatName} colors={colors} variant="bauhaus" className={avatarCSS}/>
+                <Avatar name={chat.url} colors={colors} variant="bauhaus" className={avatarCSS}/>
                 <div className="w-full space-y-1">
                     <h1 className={chatNameCSS}>{chat.chatName}</h1>
                     <p className={descriptionCSS}>
@@ -61,13 +61,20 @@ const section = (chat, i, handleOpenChat) => {
     )
 }
 
+export default function Page(){
+    return(
+        <Layout>
+            <Chats/>
+        </Layout>
+    )
+}
 
-export default function Chats(){
-    const [chatId, setChatId] = useState<string>(null);
+function Chats(){
+    const [chatUrl, setChatUrl] = useState<string>(null);
     useEffect(() => {
-        const saved = localStorage.getItem("chatId");
+        const saved = localStorage.getItem("chatUrl");
         if(saved)
-            setChatId(saved);
+            setChatUrl(saved);
     }, [])
 
     const chatCSS = `
@@ -86,9 +93,9 @@ export default function Chats(){
         h-full w-1
     `;
 
-    const handleOpenChat = (id) => {
-        setChatId(id);
-        localStorage.setItem("chatId", id);
+    const handleOpenChat = (url) => {
+        setChatUrl(url);
+        localStorage.setItem("chatUrl", url);
     };
 
     return(
@@ -96,12 +103,12 @@ export default function Chats(){
             <div className={chatsCSS}>
                 <ul className={listCSS}>
                     {chats.map((chat, i) => (
-                        section(chat, i, handleOpenChat)                       
+                        section(chat, i, handleOpenChat)                    
                     ))}
                 </ul>
             </div> 
             <Separator corientation="vertical" className={separatorCSS}/>
-            {(chatId) && <ChatBubble chatId={chatId}/>}
+            {(chatUrl) && <ChatBubble chat={chatUrl}/>}
         </div>
     )
 }

@@ -1,12 +1,14 @@
+"use client";
 import React from "react";
 import Avatar from "@/components/avatars/index.js";
-import { colors, user, chats } from "@/lib/utils";
+import { colors, chats } from "@/lib/utils";
+import { useCommon } from "@/app/context/CommonContext";
 
 
-const chatBubble = (messages: any, i: int) => {   
+const chatBubble = (messages: any, i: int) => {  
+    const { user } = useCommon();
     const avatarCSS = `
-        w-12 h-12
-        ml-4
+        w-14 h-14
         chat-image avatar
     `;
     const messageCSS = `
@@ -14,20 +16,21 @@ const chatBubble = (messages: any, i: int) => {
     `;
     const messageLeftCSS = `
         chat chat-start
+        ml-3
     `;
     const messageRightCSS = `
-        chat chat-end
+        chat chat-end 
+        mr-3
     `;
 
-
     return(
-       <div key={i} className={user.displayName !== messages.author.displayName ? messageLeftCSS : messageRightCSS}>
-            <Avatar name={messages.author.displayName} colors={colors} variant="beam" className={avatarCSS} />
+       <div key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
+            <Avatar name={messages.author.username} colors={colors} variant="beam" className={avatarCSS} />
             <div className="chat-header flex items-center space-x-3">
-                <h1>{messages.author.displayName}</h1>
-                <h1 className="text-xs opacity-50">{messages.author.pronouns[0]}/{messages.author.pronouns[1]}</h1>
+                <h1 className="text-lg">{messages.author.username}</h1>
+                <h1 className="text-md opacity-50">{messages.author.pronouns[0]}/{messages.author.pronouns[1]}</h1>
             </div>
-            <div className="chat-bubble bg-gray-200 text-black">
+            <div className="chat-bubble bg-gray-200 text-black text-xl">
                 {messages.content}
             </div>
         </div>
@@ -37,13 +40,16 @@ const chatBubble = (messages: any, i: int) => {
 
 
 
-export default function Chat(chatId: string){
-
+export default function Chat(chatUrl: string){
+    
+    console.log("chatUrl", chatUrl);
 
     let obj;
     for (let i = 0; i < chats.length; i++){
-        if(chats[i].chatId === chatId.chatId){
+        // dont tocuh vvvvvvvvvvvvvvvvvv
+        if(chats[i].url === chatUrl.chat){
             obj = chats[i];
+            console.log("found chat", obj);
             break;
         }
     }
