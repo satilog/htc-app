@@ -6,7 +6,7 @@ import { useCommon } from "@/app/context/CommonContext";
 import { useState, useEffect } from "react";
 
 const chatBubble = (messages: any, i: int) => { 
-    console.log(messages);
+    console.log(messages, "messages");
     const { user } = useCommon();
     const avatarCSS = `
         w-14 h-14
@@ -23,12 +23,14 @@ const chatBubble = (messages: any, i: int) => {
         chat chat-end 
         mr-3
     `;
-    const p0 = messages.author.pronouns[0];
-    const p1 = messages.author.pronouns[1];
+    const p0 = messages?.author?.pronouns && messages?.author?.pronouns[0] || "";
+    const p1 = messages?.author?.pronouns && messages?.author?.pronouns[1] || "";
 
 
     return(
-       <div key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
+       <div style={{
+        // backgroundColor: "black",
+       }} key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
             <Avatar name={messages.author.username} colors={colors} variant="beam" className={avatarCSS} />
             <div className="chat-header flex items-center space-x-3">
                 <h1 className="text-lg">{messages.author.username}</h1>
@@ -123,19 +125,23 @@ export default function Chat(chatId: any){
     }
 
 
-    return
+    // return
 
     return(
-        <div className={chatCSS}>
+        <div className={chatCSS}
+        >
             <div className={headerCSS}>
-                <Avatar name={chat.url} colors={colors} variant="bauhaus" className={avatarCSS} />
+                <Avatar name={chat?.url} colors={colors} variant="bauhaus" className={avatarCSS} />
                 <div className={titleCSS}>
-                    <h1>{chat.chatName}</h1>
+                    <h1>{chat?.chatName}</h1>
                 </div>
             </div>
+        <div className="h-[90vh] overflow-y-auto">
             <div className={messagesCSS}>
-                {chat.messages.map((message: any, i: int) => chatBubble(message, i))}
+                {chat?.messages?.map((message: any, i: int) => chatBubble(message, i))}
             </div>
+        </div>
+
             <div className={inputCSS}>
                 <input onKeyPress={(e) => type(e)} type="text" placeholder="Type here" className={inputAreaCSS}/>
             </div>
