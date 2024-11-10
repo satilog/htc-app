@@ -455,5 +455,170 @@ export const chats = [
         "pronouns": ["she", "her"]
       }
     ]
+  },
+  {
+    "url": "https://example.com/chat1",
+    "chatName": "Chat Room 1",
+    "description": "Discussion on project updates",
+    "messages": [
+      {
+        "id": "msg1_1",
+        "content": "Hello team, let's start our discussion!",
+        "author": {
+          "email": "cheesedanishboy@gmail.com",
+          "username": "cheesedanishboy",
+          "password": "hashedPassword1",
+          "pronouns": ["he", "him"]
+        },
+        "createdAt": "2024-11-10T10:00:00Z"
+      },
+      {
+        "id": "msg1_2",
+        "content": "Sure, I have some updates to share.",
+        "author": {
+          "email": "user1@example.com",
+          "username": "projectGuru1",
+          "password": "hashedPassword2",
+          "pronouns": ["she", "her"]
+        },
+        "createdAt": "2024-11-10T10:01:00Z"
+      },
+      {
+        "id": "msg1_3",
+        "content": "Great! Let's discuss our next steps.",
+        "author": {
+          "email": "user2@example.com",
+          "username": "techSavvy2",
+          "password": "hashedPassword3",
+          "pronouns": ["they", "them"]
+        },
+        "createdAt": "2024-11-10T10:02:00Z"
+      },
+      {
+        "id": "msg1_4",
+        "content": "Can we also review the timeline?",
+        "author": {
+          "email": "user3@example.com",
+          "username": "plannerExtra3",
+          "password": "hashedPassword4",
+          "pronouns": ["he", "him"]
+        },
+        "createdAt": "2024-11-10T10:03:00Z"
+      }
+    ],
+    "users": [
+      {
+        "email": "cheesedanishboy@gmail.com",
+        "username": "cheesedanishboy",
+        "password": "hashedPassword1",
+        "pronouns": ["he", "him"]
+      },
+      {
+        "email": "user1@example.com",
+        "username": "projectGuru1",
+        "password": "hashedPassword2",
+        "pronouns": ["she", "her"]
+      },
+      {
+        "email": "user2@example.com",
+        "username": "techSavvy2",
+        "password": "hashedPassword3",
+        "pronouns": ["they", "them"]
+      },
+      {
+        "email": "user3@example.com",
+        "username": "plannerExtra3",
+        "password": "hashedPassword4",
+        "pronouns": ["he", "him"]
+      }
+    ]
+  },
+  {
+    "url": "https://example.com/chat2",
+    "chatName": "Chat Room 2",
+    "description": "Casual discussions and brainstorming",
+    "messages": [
+      {
+        "id": "msg2_1",
+        "content": "Anyone up for a quick brainstorming session?",
+        "author": {
+          "email": "cheesedanishboy@gmail.com",
+          "username": "cheesedanishboy",
+          "password": "hashedPassword1",
+          "pronouns": ["he", "him"]
+        },
+        "createdAt": "2024-11-10T10:10:00Z"
+      },
+      {
+        "id": "msg2_2",
+        "content": "Sounds good, let's go!",
+        "author": {
+          "email": "user4@example.com",
+          "username": "ideaMaker4",
+          "password": "hashedPassword5",
+          "pronouns": ["she", "her"]
+        },
+        "createdAt": "2024-11-10T10:11:00Z"
+      },
+      {
+        "id": "msg2_3",
+        "content": "I have a few ideas to discuss.",
+        "author": {
+          "email": "user5@example.com",
+          "username": "visionary5",
+          "password": "hashedPassword6",
+          "pronouns": ["they", "them"]
+        },
+        "createdAt": "2024-11-10T10:12:00Z"
+      },
+      {
+        "id": "msg2_4",
+        "content": "Can we also include tech trends?",
+        "author": {
+          "email": "user6@example.com",
+          "username": "trendSpotter6",
+          "password": "hashedPassword7",
+          "pronouns": ["he", "him"]
+        },
+        "createdAt": "2024-11-10T10:13:00Z"
+      },
+      {
+        "id": "msg2_5",
+        "content": "Absolutely! Let's make it happen.",
+        "author": {
+          "email": "cheesedanishboy@gmail.com",
+          "username": "cheesedanishboy",
+          "password": "hashedPassword1",
+          "pronouns": ["he", "him"]
+        },
+        "createdAt": "2024-11-10T10:14:00Z"
+      }
+    ],
+    "users": [
+      {
+        "email": "cheesedanishboy@gmail.com",
+        "username": "cheesedanishboy",
+        "password": "hashedPassword1",
+        "pronouns": ["he", "him"]
+      },
+      {
+        "email": "user4@example.com",
+        "username": "ideaMaker4",
+        "password": "hashedPassword5",
+        "pronouns": ["she", "her"]
+      },
+      {
+        "email": "user5@example.com",
+        "username": "visionary5",
+        "password": "hashedPassword6",
+        "pronouns": ["they", "them"]
+      },
+      {
+        "email": "user6@example.com",
+        "username": "trendSpotter6",
+        "password": "hashedPassword7",
+        "pronouns": ["he", "him"]
+      }
+    ]
   }
 ];

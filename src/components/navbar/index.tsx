@@ -12,6 +12,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { IoHome } from "react-icons/io5";
+import { IoBarChart } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
+import { IoChatbox } from "react-icons/io5";
 
 const Account = ({ user }) => {  
     const [username, setUsername] = useState();
@@ -105,15 +109,14 @@ export default function NavBar() {
     if (!user) return null;
 
     const links = [
-        {name: "Home", href: "/", icon: "home"},
-        {name: "Chats", href: "/chats", icon: "chat"},
-        {name: "Search", href: "/search", icon: "search"},
-        {name: "Analytics", href: "/dashboard", icon: "analytics"},
+        {name: "Chats", href: "/chats", icon: <IoChatbox />},
+        {name: "Search", href: "/search", icon: <IoSearch />},
+        {name: "Analytics", href: "/dashboard", icon: <IoBarChart />},
     ];
 
     const itemCSS = `
         flex items-center justify-center
-        h-14 w-14 
+        h-16 w-16 
         ease duration-500
         bg-gray-200 hover:bg-gray-300
         rounded-full
@@ -121,9 +124,10 @@ export default function NavBar() {
     const linkCSS = `
         flex items-center justify-center
         h-full w-full
+        text-3xl
     `;
     const navCSS = `
-        h-full w-20
+        h-full w-24
         bg-gray-100
         py-5  
         flex flex-col items-center
@@ -146,7 +150,7 @@ export default function NavBar() {
                 {links.map((link) => (
                     <li className={itemCSS} key={link.icon}>
                         <Link href={link.href} className={linkCSS}>
-                            <i className="material-icons large">{link.icon}</i>
+                            {link.icon}
                         </Link>
                     </li>
                 ))}

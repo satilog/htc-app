@@ -10,6 +10,11 @@ export default {
   theme: {
   	extend: {
   		colors: {
+            customBlue: '#92A1C6',
+            customTeal: '#146A7C',
+            customYellow: '#F0AB3D',
+            customPurple: '#C271B4',
+            customPink: '#C20D90',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

@@ -22,18 +22,26 @@ const chatBubble = (messages: any, i: int) => {
         chat chat-end 
         mr-3
     `;
+    const p0 = messages.author.pronouns[0];
+    const p1 = messages.author.pronouns[1];
+
 
     return(
        <div key={i} className={user.email !== messages.author.email ? messageLeftCSS : messageRightCSS}>
             <Avatar name={messages.author.username} colors={colors} variant="beam" className={avatarCSS} />
             <div className="chat-header flex items-center space-x-3">
                 <h1 className="text-lg">{messages.author.username}</h1>
-                <h1 className="text-md opacity-50">{messages.author.pronouns[0]}/{messages.author.pronouns[1]}</h1>
+                {p0 && p1 && (
+                    <h1 className="text-md opacity-50">{p0}/{p1}</h1>
+                )}
+                {((p0 && !p1) || (!p0 && p1)) && (
+                    <h1 className="text-md opacity-50">{(p0 || p1)}</h1>
+                )}
             </div>
             <div className="chat-bubble bg-gray-200 text-black text-xl">
                 {messages.content}
             </div>
-        </div>
+       </div>
     )    
 };
 
