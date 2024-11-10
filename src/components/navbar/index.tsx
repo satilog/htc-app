@@ -102,6 +102,10 @@ export default function NavBar() {
         if (!user && !userEmail) {
             router.push("/sign-up");
         }
+
+        if(window.location.pathname === "/"){
+            router.push("/sign-up");
+        }
         // Remove the else condition to prevent redirect loop
     }, [user, router]);
 
