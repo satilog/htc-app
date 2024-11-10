@@ -19,12 +19,12 @@ export default function NavBar(){
     return(
         <ul className="absolute h-full w-20 bg-gray-100 flex flex-col h-full items-center py-5">
             <li className={linkCSS}>
-                <Avatar name={name} colors={colors} variant="beam" />
+                <Avatar name={name} colors={colors} variant="beam" size={50}/>
             </li>
 
             <div className="divider bg-red-200"></div> 
-            {links.map((link) => (
-                <li className={linkCSS}>
+            {links.map((link, index) => (
+                <li className={linkCSS} key={index}>
                     <Link  href={link.href} className="flex items-center justify-center h-full w-full">
                         <i className="material-icons">{link.icon}</i>
                     </Link>
