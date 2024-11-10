@@ -1,114 +1,109 @@
+// design better scroll bar
+// selected chat should be highlighted
+"use client";
+
+
 import React from "react";
+import {useState} from "react";
+import {useEffect} from "react";
 import Avatar from "@/components/avatars/index.js";
-import { colors, user, chats } from "@/lib/utils";
+import Chat from "./chat.tsx";
+import { colors, chats } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator"
+import ChatBubble from "@/components/chat/index.tsx";
 
 
-const chatBubble = (messages: any, i: int) => {   
+const cutMessage = (message) => {
+    if(message.length > 30){
+        return message.slice(0, 25) + "...";
+    }
+    return message
+}
+
+const section = (chat, i, handleOpenChat) => {
+    const itemCSS = `
+        w-64 
+        cursor-pointer
+    `;
     const avatarCSS = `
         w-12 h-12
-        ml-4
-        chat-image avatar
+        ease duration-700
+        group-hover:rotate-[360deg]
     `;
-    const messageCSS = `
-        h-full w-full
+    const chatNameCSS = `
+        text-lg font-bold
+
     `;
-    const messageLeftCSS = `
-        chat chat-start
+    const descriptionCSS = `
+        text-sm
     `;
-    const messageRightCSS = `
-        chat chat-end
+    const separatorCSS = `
+        h-1 w-full
+        rounded-full
     `;
+
 
 
     return(
-       <div key={i} className={user.displayName !== messages.author.displayName ? messageLeftCSS : messageRightCSS}>
-            <Avatar name={messages.author.displayName} colors={colors} variant="beam" className={avatarCSS} />
-            <div className="chat-header flex items-center space-x-3">
-                <h1>{messages.author.displayName}</h1>
-                <h1 className="text-xs opacity-50">{messages.author.pronouns[0]}/{messages.author.pronouns[1]}</h1>
-            </div>
-            <div className="chat-bubble bg-gray-200 text-black">
-                {messages.content}
+     <li key={chat.chatId} className={itemCSS} onClick={()=>handleOpenChat(chat.chatId)}>
+        <div className="flex flex-col">
+            <div className="flex group space-x-3 my-3">
+                <Avatar name={chat.chatName} colors={colors} variant="bauhaus" className={avatarCSS}/>
+                <div className="w-full space-y-1">
+                    <h1 className={chatNameCSS}>{chat.chatName}</h1>
+                    <p className={descriptionCSS}>
+                        {cutMessage(chat.description)}
+                    </p>
+                </div>
             </div>
         </div>
-    )    
-};
+        <Separator className={separatorCSS}/>
+    </li>
+    )
+}
 
 
-
-
-export default function Chat(chatId: string){
-
-
-    let obj;
-    for (let i = 0; i < chats.length; i++){
-        if(chats[i].chatId === chatId.chatId){
-            obj = chats[i];
-            break;
-        }
-    }
-
-    if(!obj){
-        return <h1>Chat id doesnt exist</h1>
-    }
-
-
+export default function Chats(){
+    const [chatId, setChatId] = useState<string>(null);
+    useEffect(() => {
+        const saved = localStorage.getItem("chatId");
+        if(saved)
+            setChatId(saved);
+    }, [])
 
     const chatCSS = `
-        relative
-        h-full w-full
-        flex flex-col
+        w-full h-full
+        flex
     `;
-    const headerCSS = `
-        h-20 w-full
-        bg-gray-100
-        flex items-center
+    const chatsCSS = `
+        w-72 h-full
     `;
-    
-    const titleCSS = `
-        w-full h-20
-        flex items-center justify-center
-        text-2xl font-bold
+    const listCSS = `
+        h-full w-72
+        overflow-y-auto smooth-scroll
+        flex flex-col items-center
     `;
-
-    const avatarCSS = `
-        w-14 h-14
-        ml-4
-        ease duration-700
-        hover:rotate-[360deg]
+    const separatorCSS = `
+        h-full w-1
     `;
 
-    const messagesCSS = `
-        h-full w-full
-        flex flex-col
-    `;
-
-    const inputAreaCSS = `
-        input input-border 
-        w-1/2 max-w-xs
-        bg-gray-200
-        text-gray-800
-    `;
-
-    const inputCSS = `
-        h-20 w-full
-        flex items-center justify-center
-    `;
+    const handleOpenChat = (id) => {
+        console.log("Hello World");
+        setChatId(id);
+        localStorage.setItem("chatId", id);
+    };
 
     return(
         <div className={chatCSS}>
-            <div className={headerCSS}>
-                <Avatar name={obj.chatId} colors={colors} variant="bauhaus" className={avatarCSS} />
-                <div className={titleCSS}>
-                    <h1>{obj.chatName}</h1>
-                </div>
-            </div>
-            <div className={messagesCSS}>
-                {obj.messages.map((message: any, i: int) => chatBubble(message, i))}
-            </div>
-            <div className={inputCSS}>
-                <input type="text" placeholder="Type here" className={inputAreaCSS}/>
-            </div>
+            <div className={chatsCSS}>
+                <ul className={listCSS}>
+                    {chats.map((chat, i) => (
+                        section(chat, i, handleOpenChat)                       
+                    ))}
+                </ul>
+            </div> 
+            <Separator corientation="vertical" className={separatorCSS}/>
+            {(chatId) && <ChatBubble chatId={chatId}/>}
         </div>
     )
 }
